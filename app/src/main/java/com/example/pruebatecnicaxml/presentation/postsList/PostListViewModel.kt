@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pruebatecnicaxml.data.database.local.posts.Posts
+import com.example.pruebatecnicaxml.data.database.local.posts.PostsDao
 import com.example.pruebatecnicaxml.data.database.remote.PostApi
 import com.example.pruebatecnicaxml.domain.postslist.PostsListResult
 import com.example.pruebatecnicaxml.domain.postslist.PostsListRepository
@@ -18,10 +19,13 @@ class PostListViewModel(private val postListRepository: PostsListRepository): Vi
     private val _posts = MutableStateFlow<PostsListResult>(PostsListResult.Loading)
     val posts: StateFlow<PostsListResult> = _posts
 
+
+
     fun loadPosts() {
         viewModelScope.launch {
             postListRepository.fetchPostsFromApi()
             _posts.value = postListRepository.getLocalPosts()
         }
     }
+
 }

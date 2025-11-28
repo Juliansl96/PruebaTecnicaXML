@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.pruebatecnicaxml.data.database.local.posts.Posts
+import com.example.pruebatecnicaxml.data.database.local.posts.PostsDao
 import com.example.pruebatecnicaxml.databinding.ActivityPostListBinding
 import com.example.pruebatecnicaxml.domain.postslist.PostsListResult
 import com.example.pruebatecnicaxml.presentation.commentList.CommentActivity
@@ -34,12 +36,13 @@ class PostListActivity : AppCompatActivity() {
 
         viewModel.loadPosts()
 
+
         //aca se realiza el llamado a los eventos Listeners
         //initListener()
         observer()
-        viewModel.loadPosts()
-    }
-    /*
+        //testDao()
+
+        /*
     private fun initListener(){
 
         viewModel.loadPosts()
@@ -50,35 +53,40 @@ class PostListActivity : AppCompatActivity() {
             intent.putExtra("idPost",it.idPost)
             startActivity(intent)
         }
+        }
+         */
     }
-*/
-    private fun observer () {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.posts.collect { result ->
-                    when (result) {
-                        is PostsListResult.Loading -> Toast.makeText(
-                            this@PostListActivity,
-                            "Cargando",
-                            Toast.LENGTH_LONG
-                        ).show()
 
-                        is PostsListResult.Success -> {
-                            Toast.makeText(
+        private fun observer() {
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.posts.collect { result ->
+                        when (result) {
+                            is PostsListResult.Loading -> Toast.makeText(
                                 this@PostListActivity,
-                                "ejecutamos el update",
+                                "Cargando",
                                 Toast.LENGTH_LONG
                             ).show()
-                            adapter.update(result.postList)
-                        }
 
-                        is PostsListResult.MessageError ->
-                            Toast.makeText(this@PostListActivity, result.message, Toast.LENGTH_LONG)
-                                .show()
+                            is PostsListResult.Success -> {
+                                Toast.makeText(
+                                    this@PostListActivity,
+                                    "ejecutamos el update",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                adapter.update(result.postList)
+                            }
+
+                            is PostsListResult.MessageError ->
+                                Toast.makeText(
+                                    this@PostListActivity,
+                                    result.message,
+                                    Toast.LENGTH_LONG
+                                )
+                                    .show()
+                        }
                     }
                 }
             }
         }
     }
-
-}

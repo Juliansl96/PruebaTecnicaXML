@@ -12,6 +12,19 @@ class PostListRepositoryImpl(
     private val postsDao: PostsDao,
     private val postApi: PostApi) : PostsListRepository {
 
+    val testPost = listOf(
+        Posts(1,1,"charada","estas son unas charadas"),
+        Posts(1,2,"escondidas","estos son juegos clasicos"),
+        Posts(1,3,"la lleva","estos son juegos clasicos"),
+        Posts(1,4,"tin tin corre","estos son juegos clasicos"),
+        Posts(1,5,"5 marcas de cigarrlllo","estos son juegos clasicos"),
+    )
+
+    suspend fun testDao() {
+        postsDao.insertAll(testPost)
+        Log.d("bdInsert", "BDInsert error",)
+    }
+
     override suspend fun fetchPostsFromApi(): PostsListResult =
         try {
         val remote = postApi.getPosts()
@@ -22,7 +35,6 @@ class PostListRepositoryImpl(
                 item.title,
                 item.body)
         }
-
         postsDao.insertAll(entities)
         PostsListResult.Success(entities)
     } catch (e: Exception) {
