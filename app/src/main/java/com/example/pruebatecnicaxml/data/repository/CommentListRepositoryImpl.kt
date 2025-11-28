@@ -1,6 +1,6 @@
 package com.example.pruebatecnicaxml.data.repository
 
-import com.example.pruebatecnicaxml.data.database.comments.CommentsDao
+import com.example.pruebatecnicaxml.data.database.local.comments.CommentsDao
 import com.example.pruebatecnicaxml.domain.commentlist.CommentListRepository
 import com.example.pruebatecnicaxml.domain.commentlist.CommentListResult
 

@@ -2,7 +2,7 @@ package com.example.pruebatecnicaxml.presentation.commentList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pruebatecnicaxml.data.database.comments.Comments
+import com.example.pruebatecnicaxml.data.database.local.comments.Comments
 import com.example.pruebatecnicaxml.domain.commentlist.CommentListResult
 import com.example.pruebatecnicaxml.domain.commentlist.CommentListRepository
 import kotlinx.coroutines.flow.MutableStateFlow

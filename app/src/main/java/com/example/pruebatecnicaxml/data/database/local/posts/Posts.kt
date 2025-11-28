@@ -1,4 +1,4 @@
-package com.example.pruebatecnicaxml.data.database.posts
+package com.example.pruebatecnicaxml.data.database.local.posts
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

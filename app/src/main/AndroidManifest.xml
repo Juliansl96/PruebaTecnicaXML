@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!--Permisos requeridos para retrofit -->
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".presentation.ApplicationApp"
@@ -14,13 +16,10 @@
         android:theme="@style/Theme.PruebaTecnicaXML">
         <activity
             android:name=".presentation.commentList.CommentActivity"
-            android:exported="true" />
-        <activity
-            android:name=".presentation.postsList.PostListActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.MainActivity"
-            android:exported="false">
+            android:name=".presentation.postsList.PostListActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

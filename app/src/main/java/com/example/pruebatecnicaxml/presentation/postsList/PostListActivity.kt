@@ -2,10 +2,12 @@ package com.example.pruebatecnicaxml.presentation.postsList
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.pruebatecnicaxml.databinding.ActivityPostListBinding
+import com.example.pruebatecnicaxml.domain.postslist.PostsListResult
 import com.example.pruebatecnicaxml.presentation.commentList.CommentActivity
 import com.example.pruebatecnicaxml.presentation.postsList.list.PostListAdapter
 import com.google.android.material.snackbar.Snackbar
@@ -18,23 +20,21 @@ class PostListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        //enableEdgeToEdge()
         //inflar la vista, vincular elementos de codigo con la vista xml
         binding = ActivityPostListBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
         adapter = PostListAdapter(listOf())
-
+        binding.rvPosts.adapter = adapter
 
         //aca se realiza el llamado a los eventos Listeners
         initListener()
         observer()
-
     }
-
     private fun initListener(){
-        viewModel.getPostList()
+        viewModel.loadPosts()
         adapter.onItemClick = {
             val intent = Intent(this@PostListActivity, CommentActivity::class.java)
             intent.putExtra("title",it.title)
@@ -45,6 +45,7 @@ class PostListActivity : AppCompatActivity() {
     }
 
     private fun observer () {
+        /*
         lifecycleScope.launchWhenStarted {
             viewModel.messageError.collect { message ->
                 if (message.isNotEmpty()) {
@@ -63,5 +64,17 @@ class PostListActivity : AppCompatActivity() {
                 }
             }
         }
+         */
+        lifecycleScope.launchWhenStarted {
+            viewModel.posts.collect { result ->
+                when (result) {
+                    is PostsListResult.Loading -> { /* show loading */ }
+                    is PostsListResult.Success -> adapter.update(result.postList)
+                    is PostsListResult.MessageError ->
+                        Toast.makeText(this@PostListActivity, result.message, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        viewModel.loadPosts()
     }
 }

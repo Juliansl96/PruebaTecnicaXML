@@ -14,12 +14,14 @@ android = "4.1.1"
 koin-bom = "4.1.1"
 #para room
 room = "2.8.4"
+#otros
 foundation = "1.9.5"
 navigationFragmentKtx = "2.6.0"
 navigationUiKtx = "2.6.0"
 #para recycler y cardview
 recyclerview = "1.4.0"
 cardview = "1.0.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

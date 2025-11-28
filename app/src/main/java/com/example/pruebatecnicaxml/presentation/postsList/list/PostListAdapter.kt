@@ -3,7 +3,7 @@ package com.example.pruebatecnicaxml.presentation.postsList.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pruebatecnicaxml.data.database.posts.Posts
+import com.example.pruebatecnicaxml.data.database.local.posts.Posts
 import com.example.pruebatecnicaxml.databinding.ItempostsBinding
 
 class PostListAdapter(
@@ -14,7 +14,10 @@ class PostListAdapter(
 
     class ViewHolder(val binding: ItempostsBinding): RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int): ViewHolder {
+
         val binding = ItempostsBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -35,10 +38,8 @@ class PostListAdapter(
 
     override fun getItemCount() = postList.size
 
-    fun updateList(newPosts:List<Posts>){
-        postList = listOf()
+    fun update(newPosts:List<Posts>){
         postList = newPosts
         notifyDataSetChanged()
     }
-
 }

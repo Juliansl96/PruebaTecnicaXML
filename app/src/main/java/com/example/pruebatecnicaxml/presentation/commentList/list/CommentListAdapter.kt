@@ -3,7 +3,7 @@ package com.example.pruebatecnicaxml.presentation.commentList.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pruebatecnicaxml.data.database.comments.Comments
+import com.example.pruebatecnicaxml.data.database.local.comments.Comments
 import com.example.pruebatecnicaxml.databinding.ItemcommentsBinding
 
 class CommentListAdapter(
