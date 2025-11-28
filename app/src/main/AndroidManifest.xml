@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".presentation.ApplicationApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,20 +14,15 @@
         android:theme="@style/Theme.PruebaTecnicaXML">
         <activity
             android:name=".presentation.commentList.CommentActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".presentation.postsList.PostListActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.postsList.PostsListActivity"
-            android:exported="false"
-            android:theme="@style/Theme.PruebaTecnicaXML" />
-        <activity
             android:name=".presentation.MainActivity"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
