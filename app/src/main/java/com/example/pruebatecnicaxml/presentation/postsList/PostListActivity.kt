@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.pruebatecnicaxml.databinding.ActivityPostListBinding
 import com.example.pruebatecnicaxml.domain.postslist.PostsListResult
 import com.example.pruebatecnicaxml.presentation.commentList.CommentActivity
 import com.example.pruebatecnicaxml.presentation.postsList.list.PostListAdapter
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PostListActivity : AppCompatActivity() {
@@ -29,11 +32,16 @@ class PostListActivity : AppCompatActivity() {
         adapter = PostListAdapter(listOf())
         binding.rvPosts.adapter = adapter
 
+        viewModel.loadPosts()
+
         //aca se realiza el llamado a los eventos Listeners
-        initListener()
+        //initListener()
         observer()
+        viewModel.loadPosts()
     }
+    /*
     private fun initListener(){
+
         viewModel.loadPosts()
         adapter.onItemClick = {
             val intent = Intent(this@PostListActivity, CommentActivity::class.java)
@@ -43,38 +51,34 @@ class PostListActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
+*/
     private fun observer () {
-        /*
-        lifecycleScope.launchWhenStarted {
-            viewModel.messageError.collect { message ->
-                if (message.isNotEmpty()) {
-                    Snackbar.make(
-                        binding.main,
-                        message,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.posts.collect { result ->
+                    when (result) {
+                        is PostsListResult.Loading -> Toast.makeText(
+                            this@PostListActivity,
+                            "Cargando",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        is PostsListResult.Success -> {
+                            Toast.makeText(
+                                this@PostListActivity,
+                                "ejecutamos el update",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            adapter.update(result.postList)
+                        }
+
+                        is PostsListResult.MessageError ->
+                            Toast.makeText(this@PostListActivity, result.message, Toast.LENGTH_LONG)
+                                .show()
+                    }
                 }
             }
         }
-        lifecycleScope.launchWhenStarted{
-            viewModel.success.collect { message ->
-                if (message.isNotEmpty()) {
-                    adapter.updateList(message)
-                }
-            }
-        }
-         */
-        lifecycleScope.launchWhenStarted {
-            viewModel.posts.collect { result ->
-                when (result) {
-                    is PostsListResult.Loading -> { /* show loading */ }
-                    is PostsListResult.Success -> adapter.update(result.postList)
-                    is PostsListResult.MessageError ->
-                        Toast.makeText(this@PostListActivity, result.message, Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-        viewModel.loadPosts()
     }
+
 }

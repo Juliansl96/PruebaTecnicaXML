@@ -6,4 +6,5 @@ interface PostsListRepository {
     //suspend fun getPostList(): PostsListResult
     suspend fun fetchPostsFromApi(): PostsListResult
     suspend fun getLocalPosts(): PostsListResult
+
 }

@@ -1,7 +1,9 @@
 package com.example.pruebatecnicaxml.presentation.postsList.list
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pruebatecnicaxml.data.database.local.posts.Posts
 import com.example.pruebatecnicaxml.databinding.ItempostsBinding

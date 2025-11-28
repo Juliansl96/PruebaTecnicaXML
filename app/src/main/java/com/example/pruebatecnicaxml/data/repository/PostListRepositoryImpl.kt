@@ -1,10 +1,12 @@
 package com.example.pruebatecnicaxml.data.repository
 
+import android.util.Log
 import com.example.pruebatecnicaxml.data.database.local.posts.Posts
 import com.example.pruebatecnicaxml.data.database.local.posts.PostsDao
 import com.example.pruebatecnicaxml.data.database.remote.PostApi
 import com.example.pruebatecnicaxml.domain.postslist.PostsListRepository
 import com.example.pruebatecnicaxml.domain.postslist.PostsListResult
+import kotlin.math.log
 
 class PostListRepositoryImpl(
     private val postsDao: PostsDao,
@@ -20,6 +22,7 @@ class PostListRepositoryImpl(
                 item.title,
                 item.body)
         }
+
         postsDao.insertAll(entities)
         PostsListResult.Success(entities)
     } catch (e: Exception) {
@@ -31,15 +34,4 @@ class PostListRepositoryImpl(
     } catch (e: Exception) {
         PostsListResult.MessageError(e.toString())
     }
-    /*
-    override suspend fun getPostList(): PostsListResult {
-        return try {
-            val listPosts = postsDao.getPostsList()
-            PostsListResult.Success(listPosts)
-        } catch (e: Exception) {
-            PostsListResult.MessageError(e.toString())
-        }
-    }
-
-     */
 }
