@@ -8,7 +8,7 @@ import com.example.pruebatecnicaxml.domain.commentlist.CommentListRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class CommentViewModel(private val postcommentListRepository: CommentListRepository):
+class CommentViewModel(private val commentListRepository: CommentListRepository):
     ViewModel() {
     //los mutableStateFlow son flujos de datos que siempre tienen un valor actual y puede estarse cambiando y cualquier observador se dara cuenta de inmediato
     private val _messageError = MutableStateFlow("")
@@ -17,10 +17,10 @@ class CommentViewModel(private val postcommentListRepository: CommentListReposit
     private val _success = MutableStateFlow<List<Comments>>(listOf())
     var success = _success
 
-    fun getPostList(){
+    fun getCommentList(idspt: Int){
         viewModelScope.launch {
-            when (val response = postcommentListRepository.getCommentList()){
-                is CommentListResult.Success -> _success.value = response.postcommentlist
+            when (val response = commentListRepository.getCommentList(idspt)){
+                is CommentListResult.Success -> _success.value = response.commentsList
                 is CommentListResult.MessageError -> _messageError.value = response.message
             }
         }
